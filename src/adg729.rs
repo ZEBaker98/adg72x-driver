@@ -25,7 +25,7 @@ where
     }
 
     pub fn set_a(&mut self, enabled: u8) -> Result<(), I2C::Error> {
-        self.set_channels((self.enabled & 0xF0) | ((enabled & 0xF) << 0))
+        self.set_channels((self.enabled & 0xF0) | (enabled & 0xF))
     }
 
     pub fn set_b(&mut self, enabled: u8) -> Result<(), I2C::Error> {
@@ -40,7 +40,7 @@ where
     }
 
     pub fn get_a(&mut self) -> Result<u8, I2C::Error> {
-        Ok((self.get_channels()? >> 0) & 0x0F)
+        Ok(self.get_channels()? & 0x0F)
     }
 
     pub fn get_b(&mut self) -> Result<u8, I2C::Error> {
@@ -69,7 +69,7 @@ where
     }
 
     pub async fn set_a_async(&mut self, enabled: u8) -> Result<(), I2C::Error> {
-        self.set_channels_async((self.enabled & 0xF0) | ((enabled & 0xF) << 0))
+        self.set_channels_async((self.enabled & 0xF0) | (enabled & 0xF))
             .await
     }
 
@@ -86,7 +86,7 @@ where
     }
 
     pub async fn get_a_async(&mut self) -> Result<u8, I2C::Error> {
-        Ok((self.get_channels_async().await? >> 0) & 0x0F)
+        Ok(self.get_channels_async().await? & 0x0F)
     }
 
     pub async fn get_b_async(&mut self) -> Result<u8, I2C::Error> {
